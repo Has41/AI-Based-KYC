@@ -3,7 +3,7 @@ import { BadgeCheck } from "lucide-react";
 // import { useNavigate } from "react-router";
 
 const VerificationComplete = () => {
-  const { walletId, points } = useWallet();
+  const { points } = useWallet();
   // const navigate = useNavigate();
 
   return (
