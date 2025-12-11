@@ -23,7 +23,7 @@ const Wallet = ({ setTab }: { setTab: React.Dispatch<React.SetStateAction<Tab>> 
 
   return (
     <section className="bg-gray-100 p-6 space-y-6 font-poppins">
-      <h1 className="text-2xl font-bold">My Wallet</h1>
+      <h1 className="text-2xl font-bold">Welcome to Oeconvi digital wallet</h1>
 
       <WalletUserInfo setShowQr={setShowQr} fullName={fullName} tier={tier} />
 
