@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { CheckCircle, Loader2 } from "lucide-react";
 
-interface VerificationModalProps {
+type VerificationModalProps = {
   open: boolean;
   onClose: () => void;
-}
+};
 
 const VerificationModal = ({ open, onClose }: VerificationModalProps) => {
   const [status, setStatus] = useState<"pending" | "success">("pending");

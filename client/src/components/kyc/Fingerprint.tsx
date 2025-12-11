@@ -141,7 +141,7 @@ const Fingerprint = ({ setStep, setTab }: FingerprintProps) => {
   }
 
   return (
-    <section className="fixed inset-0 z-50 bg-black flex flex-col items-center justify-center">
+    <section className="fixed inset-0 z-50 flex flex-col items-center justify-center">
       {!leftHandImg || !rightHandImg ? (
         <>
           {/* Camera Feed */}
@@ -196,7 +196,7 @@ const Fingerprint = ({ setStep, setTab }: FingerprintProps) => {
           </div>
         </>
       ) : (
-        <div className="w-full h-full flex flex-col items-center justify-center gap-4 p-4 bg-black">
+        <div className="w-full h-full flex flex-col items-center justify-center gap-4 p-4">
           {/* Display captured images */}
           <div className="w-full h-1/2 rounded-lg border bg-gray-200 flex items-center justify-center overflow-hidden">
             {leftHandImg && <img src={leftHandImg} alt="Left Hand" className="w-full h-full object-contain" />}

@@ -1,7 +1,13 @@
 import { useState, useRef, useEffect } from "react";
 import VerificationModal from "../common/VerificationModal";
+import type { Step } from "../../types/KycFlowTypes";
 
-const FaceCapture = ({ finalizeVerification }: { finalizeVerification: () => void }) => {
+type FaceCaptureProps = {
+  finalizeVerification: () => void;
+  setStep: React.Dispatch<React.SetStateAction<Step>>;
+};
+
+const FaceCapture = ({ finalizeVerification, setStep }: FaceCaptureProps) => {
   const [ready, setReady] = useState(false);
   const [capturedFace, setCapturedFace] = useState<string | null>(null);
   const [flashOn, setFlashOn] = useState(false);
@@ -92,7 +98,7 @@ const FaceCapture = ({ finalizeVerification }: { finalizeVerification: () => voi
   return (
     <>
       {/* MAIN SECTION */}
-      <section className="fixed inset-0 z-50 flex flex-col items-center justify-center">
+      <section className="fixed left-0 right-0 z-50 flex flex-col items-center justify-center">
         {!ready ? (
           <div className="p-4 text-center font-poppins">
             <h2 className="text-xl font-semibold mb-2">Face Verification</h2>
@@ -100,6 +106,13 @@ const FaceCapture = ({ finalizeVerification }: { finalizeVerification: () => voi
             <div className="flex flex-col gap-y-4">
               <button onClick={() => setReady(true)} className="px-6 py-3 bg-purple-600 text-white rounded-lg">
                 Start Face Capture
+              </button>
+
+              <button
+                onClick={() => setStep("fingerprint")}
+                className="w-full py-3 rounded-lg font-medium mt-4 bg-purple-600 hover:bg-purple-700 text-white"
+              >
+                Back
               </button>
               <button onClick={handleCompleteVerification} className="px-6 py-3 bg-purple-600 text-white rounded-lg">
                 Complete Verification

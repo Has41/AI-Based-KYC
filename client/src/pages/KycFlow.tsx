@@ -57,7 +57,7 @@ const KycFlow = () => {
           {step === "personal" && <PersonalInfo setStep={setStep} />}
           {step === "cnic" && <CnicUpload setStep={setStep} />}
           {step === "fingerprint" && <Fingerprint setStep={setStep} setTab={setTab} />}
-          {step === "face" && <FaceCapture finalizeVerification={finalizeVerification} />}
+          {step === "face" && <FaceCapture setStep={setStep} finalizeVerification={finalizeVerification} />}
         </div>
       )}
 
