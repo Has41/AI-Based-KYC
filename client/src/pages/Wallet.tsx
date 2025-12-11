@@ -34,7 +34,9 @@ const Wallet = ({ setTab }: { setTab: React.Dispatch<React.SetStateAction<Tab>> 
         <button onClick={() => setTab("rewards")} className="w-full py-3 bg-purple-600 text-white rounded-lg">
           Browse Rewards
         </button>
-
+        <button onClick={() => setTab("dashboard")} className="w-full py-3 bg-purple-600 text-white rounded-lg">
+          Reporting Dashboard
+        </button>
         <button onClick={() => setMode("scan")} className="w-full py-3 bg-gray-800 text-white rounded-lg">
           Store Mode (Earn / Redeem)
         </button>

@@ -6,6 +6,7 @@ import type { Step, Tab } from "../types/KycFlowTypes";
 import { useWallet } from "../hooks/useWallet";
 import Wallet from "./Wallet";
 import Rewards from "./Rewards";
+import ReportDashboard from "./ReportDashboard";
 
 const KycFlow = () => {
   const { createWallet, addPoints } = useWallet();
@@ -51,6 +52,7 @@ const KycFlow = () => {
 
       {tab === "home" && <Wallet setTab={setTab} />}
       {tab === "rewards" && <Rewards setTab={setTab} />}
+      {tab === "dashboard" && <ReportDashboard />}
     </main>
   );
 };
