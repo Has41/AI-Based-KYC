@@ -25,9 +25,9 @@ const HeroSection: React.FC<HeroSectionProps> = ({ setView }) => {
 
       {/* Hero Content */}
       <section className="w-full h-screen gap-y-4 flex flex-col items-center justify-center text-center relative z-10">
-        <h2 className="text-4xl md:text-6xl font-bold mb-4 text-white">Automated KYC Verification</h2>
+        <h2 className="text-4xl md:text-6xl font-bold mb-4 text-white">Whitelabel Digital Onboarding Platform</h2>
         <p className="text-lg md:text-xl max-w-3xl text-gray-200 drop-shadow">
-          Fast, secure and reliable Know Your Customer (KYC) system built for modern businesses.
+          Offering seamless sign-up and registration experience for your customers and employees; featuring custom branding, and faster time-to-market
         </p>
         <button
           onClick={() => setView("kyc")}
