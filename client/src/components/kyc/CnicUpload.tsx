@@ -77,6 +77,10 @@ const CnicUpload = ({ setStep }: CnicUploadProps) => {
           </button>
         </>
       )}
+
+      <button onClick={() => setStep("personal")} className="w-full py-3 rounded-lg font-medium mt-4 bg-purple-600 hover:bg-purple-700 text-white">
+        Back
+      </button>
     </section>
   );
 };

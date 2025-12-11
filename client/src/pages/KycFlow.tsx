@@ -39,7 +39,7 @@ const KycFlow = () => {
     <main className="min-h-screen p-6 flex flex-col items-center">
       {tab === "not-active" && (
         <div className="flex justify-between mb-8 gap-x-6 text-sm font-medium w-full max-w-xl">
-          <span className={`${step === "cnic" ? "text-purple-600 font-bold" : "text-neutral-500"}`}>Step 1</span>
+          <span className={`${step === "personal" ? "text-purple-600 font-bold" : "text-neutral-500"}`}>Step 1</span>
           <span className={`${step === "cnic" ? "text-purple-600 font-bold" : "text-neutral-500"}`}>Step 2</span>
           <span className={`${step === "fingerprint" ? "text-purple-600 font-bold" : "text-neutral-500"}`}>Step 3</span>
         </div>

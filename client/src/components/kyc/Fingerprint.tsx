@@ -127,10 +127,15 @@ const Fingerprint = ({ setStep, setTab }: FingerprintProps) => {
       <section className="p-4 text-center font-poppins">
         <h2 className="text-xl font-semibold mb-2">Fingerprint Capture</h2>
         <p className="text-sm text-neutral-600 mb-4">We will now capture your fingerprints using your phone’s back camera.</p>
+        <div className="flex flex-col">
+          <button onClick={() => setReady(true)} className="px-6 py-3 bg-purple-600 text-white rounded-lg">
+            I'm Ready
+          </button>
 
-        <button onClick={() => setReady(true)} className="px-6 py-3 bg-purple-600 text-white rounded-lg">
-          I'm Ready
-        </button>
+          <button onClick={() => setStep("cnic")} className="py-3 rounded-lg font-medium mt-4 bg-purple-600 hover:bg-purple-700 text-white">
+            Back
+          </button>
+        </div>
       </section>
     );
   }
