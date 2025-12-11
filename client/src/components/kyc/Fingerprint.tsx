@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import type { Step, Tab } from "../../types/KycFlowTypes";
+import VerificationModal from "../common/VerificationModal";
 
 type FingerprintProps = {
   setStep: React.Dispatch<React.SetStateAction<Step>>;
@@ -8,6 +9,7 @@ type FingerprintProps = {
 
 const Fingerprint = ({ setStep, setTab }: FingerprintProps) => {
   const [ready, setReady] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
   const [phase, setPhase] = useState<"left" | "right">("left");
   const [leftHandImg, setLeftHandImg] = useState<string | null>(null);
   const [rightHandImg, setRightHandImg] = useState<string | null>(null);
@@ -74,6 +76,15 @@ const Fingerprint = ({ setStep, setTab }: FingerprintProps) => {
     await track.applyConstraints({
       advanced: [{ focusMode: "continuous" } as any]
     });
+  };
+
+  const handleCompleteVerification = () => {
+    setModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setModalOpen(false);
+    setTab("home"); // navigate to wallet/home after verification
   };
 
   useEffect(() => {
@@ -195,12 +206,13 @@ const Fingerprint = ({ setStep, setTab }: FingerprintProps) => {
               Continue to Face (Optional)
             </button>
 
-            <button onClick={() => setTab("home")} className="w-full py-3 bg-purple-600 text-white rounded-lg">
-              Go to Wallet
+            <button onClick={handleCompleteVerification} className="w-full py-3 bg-purple-600 text-white rounded-lg">
+              Complete Verification
             </button>
           </div>
         </div>
       )}
+      <VerificationModal open={modalOpen} onClose={handleModalClose} />
     </section>
   );
 };

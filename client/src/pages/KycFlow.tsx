@@ -8,10 +8,11 @@ import Wallet from "./Wallet";
 import Rewards from "./Rewards";
 import ReportDashboard from "./ReportDashboard";
 import { Info } from "lucide-react";
+import PersonalInfo from "../components/kyc/PersonalInfo";
 
 const KycFlow = () => {
   const { createWallet, addPoints } = useWallet();
-  const [step, setStep] = useState<Step>("cnic");
+  const [step, setStep] = useState<Step>("personal");
   const [tab, setTab] = useState<Tab>("not-active");
 
   const isMobile = window.innerWidth <= 600; // Mobile-only
@@ -39,7 +40,8 @@ const KycFlow = () => {
       {tab === "not-active" && (
         <div className="flex justify-between mb-8 gap-x-6 text-sm font-medium w-full max-w-xl">
           <span className={`${step === "cnic" ? "text-purple-600 font-bold" : "text-neutral-500"}`}>Step 1</span>
-          <span className={`${step === "fingerprint" ? "text-purple-600 font-bold" : "text-neutral-500"}`}>Step 2</span>
+          <span className={`${step === "cnic" ? "text-purple-600 font-bold" : "text-neutral-500"}`}>Step 2</span>
+          <span className={`${step === "fingerprint" ? "text-purple-600 font-bold" : "text-neutral-500"}`}>Step 3</span>
         </div>
       )}
 
@@ -52,6 +54,7 @@ const KycFlow = () => {
 
       {tab === "not-active" && (
         <div className="max-w-full p-8">
+          {step === "personal" && <PersonalInfo setStep={setStep} />}
           {step === "cnic" && <CnicUpload setStep={setStep} />}
           {step === "fingerprint" && <Fingerprint setStep={setStep} setTab={setTab} />}
           {step === "face" && <FaceCapture finalizeVerification={finalizeVerification} />}
