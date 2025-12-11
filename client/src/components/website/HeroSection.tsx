@@ -17,10 +17,9 @@ const HeroSection: React.FC<HeroSectionProps> = ({ setView }) => {
 
       {/* Navbar */}
       <nav className="w-full py-4 relative z-20 px-6 flex justify-between items-center top-0">
-        <h1 className="text-2xl font-bold text-purple-600">KYC System</h1>
-        <button onClick={() => setView("kyc")} className="bg-purple-600 text-white px-4 py-2 rounded-lg">
-          Get Started
-        </button>
+        <a href="https://oeconvi.com/" target="_blank" rel="noopener noreferrer" className="text-2xl font-bold text-purple-600 hover:underline">
+          Oeconvi
+        </a>
       </nav>
 
       {/* Hero Content */}
@@ -33,7 +32,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ setView }) => {
           onClick={() => setView("kyc")}
           className="mt-6 bg-purple-600 cursor-pointer text-white px-6 py-3 rounded-md text-lg shadow-md hover:opacity-90"
         >
-          Start Verification
+          Demo
         </button>
       </section>
     </section>

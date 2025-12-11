@@ -7,6 +7,7 @@ import { useWallet } from "../hooks/useWallet";
 import Wallet from "./Wallet";
 import Rewards from "./Rewards";
 import ReportDashboard from "./ReportDashboard";
+import { Info } from "lucide-react";
 
 const KycFlow = () => {
   const { createWallet, addPoints } = useWallet();
@@ -39,6 +40,13 @@ const KycFlow = () => {
         <div className="flex justify-between mb-8 gap-x-6 text-sm font-medium w-full max-w-xl">
           <span className={`${step === "cnic" ? "text-purple-600 font-bold" : "text-neutral-500"}`}>Step 1</span>
           <span className={`${step === "fingerprint" ? "text-purple-600 font-bold" : "text-neutral-500"}`}>Step 2</span>
+        </div>
+      )}
+
+      {tab === "not-active" && (
+        <div className="mb-4 w-full flex items-center gap-x-2 max-w-xl px-4 py-2 bg-yellow-100 text-yellow-800 text-center text-sm rounded-lg">
+          <Info className="text-yellow-600" />
+          <p>Note: No data is saved during this demo.</p>
         </div>
       )}
 

@@ -83,13 +83,31 @@ const Fingerprint = ({ setStep, setTab }: FingerprintProps) => {
   }, []);
 
   const captureLeftHand = () => {
-    setLeftHandImg("https://via.placeholder.com/400x300?text=Left+Hand");
+    if (!videoRef.current) return;
+    const canvas = document.createElement("canvas");
+    canvas.width = videoRef.current.videoWidth;
+    canvas.height = videoRef.current.videoHeight;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+    ctx.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
+    const dataUrl = canvas.toDataURL("image/png");
+
+    setLeftHandImg(dataUrl);
     setLeftMatch(90 + Math.floor(Math.random() * 5));
     setPhase("right");
   };
 
   const captureRightHand = () => {
-    setRightHandImg("https://via.placeholder.com/400x300?text=Right+Hand");
+    if (!videoRef.current) return;
+    const canvas = document.createElement("canvas");
+    canvas.width = videoRef.current.videoWidth;
+    canvas.height = videoRef.current.videoHeight;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+    ctx.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
+    const dataUrl = canvas.toDataURL("image/png");
+
+    setRightHandImg(dataUrl);
     setRightMatch(88 + Math.floor(Math.random() * 5));
   };
 
@@ -163,9 +181,14 @@ const Fingerprint = ({ setStep, setTab }: FingerprintProps) => {
         </>
       ) : (
         <div className="w-full h-full flex flex-col items-center justify-center gap-4 p-4 bg-black">
-          <div className="w-full h-1/2 rounded-lg border bg-gray-200 flex items-center justify-center">Left Hand Placeholder</div>
+          {/* Display captured images */}
+          <div className="w-full h-1/2 rounded-lg border bg-gray-200 flex items-center justify-center overflow-hidden">
+            {leftHandImg && <img src={leftHandImg} alt="Left Hand" className="w-full h-full object-contain" />}
+          </div>
 
-          <div className="w-full h-1/2 rounded-lg border bg-gray-200 flex items-center justify-center">Right Hand Placeholder</div>
+          <div className="w-full h-1/2 rounded-lg border bg-gray-200 flex items-center justify-center overflow-hidden">
+            {rightHandImg && <img src={rightHandImg} alt="Right Hand" className="w-full h-full object-contain" />}
+          </div>
 
           <div className="w-full flex flex-col gap-2 mt-4">
             <button onClick={() => setStep("face")} className="w-full py-3 bg-purple-600 text-white rounded-lg">
