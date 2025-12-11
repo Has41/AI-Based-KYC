@@ -49,16 +49,23 @@ const FaceCapture = ({ finalizeVerification }: { finalizeVerification: () => voi
 
     const video = videoRef.current;
     const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
+
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;
-    const ctx = canvas.getContext("2d");
-    if (ctx) ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+    if (ctx) {
+      // Un-mirror the captured image
+      ctx.translate(canvas.width, 0);
+      ctx.scale(-1, 1);
+
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    }
 
     const dataUrl = canvas.toDataURL("image/png");
     setCapturedFace(dataUrl);
 
-    // Stop camera
-    streamRef.current?.getTracks().forEach((track) => track.stop());
+    streamRef.current?.getTracks().forEach((t) => t.stop());
   };
 
   const toggleFlash = async (on: boolean) => {
@@ -94,25 +101,36 @@ const FaceCapture = ({ finalizeVerification }: { finalizeVerification: () => voi
     <section className="fixed inset-0 z-50 bg-black flex flex-col items-center justify-center">
       {!capturedFace ? (
         <>
-          <video ref={videoRef} autoPlay playsInline className="w-full h-full object-cover" />
+          <video ref={videoRef} autoPlay playsInline className="w-full h-full object-cover transform -scale-x-100" />
 
-          {/* Flash toggle */}
+          {/* Torch */}
           {torchSupported && (
             <button onClick={() => toggleFlash(!flashOn)} className="absolute top-6 right-6 z-50 p-3 bg-black/50 text-white rounded-full">
               {flashOn ? "💡 Off" : "💡 On"}
             </button>
           )}
 
-          {/* Overlay UI */}
-          <div className="absolute bottom-6 w-full px-4 flex flex-col gap-3">
+          {/* 🎯 FACE MARKER */}
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <div
+              className="
+              border-4 border-white/60
+              rounded-full
+              w-88 h-110
+              backdrop-brightness-75
+            "
+            />
+          </div>
+
+          {/* Bottom UI */}
+          <div className="absolute bottom-6 w-full px-4 flex flex-col gap-3 z-50">
             <h2 className="text-white text-lg text-center mb-2">Face Verification</h2>
-            <p className="text-white text-center text-sm mb-2">Align your face in the frame and tap capture.</p>
+            <p className="text-white text-center text-sm mb-2">Align your face inside the circle and tap capture.</p>
             <button onClick={captureFace} className="w-full py-3 bg-purple-600 text-white rounded-lg">
               Capture Face
             </button>
           </div>
 
-          {/* Hidden canvas for snapshot */}
           <canvas ref={canvasRef} className="hidden" />
         </>
       ) : (
