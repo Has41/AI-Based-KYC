@@ -1,4 +1,5 @@
 import type { Dispatch, SetStateAction } from "react";
+import heroBg from "../../assets/hero-bg.jpg";
 
 type ViewType = "home" | "kyc";
 
@@ -10,7 +11,7 @@ interface HeroSectionProps {
 
 const HeroSection: React.FC<HeroSectionProps> = ({ setView }) => {
   return (
-    <section className="w-full min-h-screen bg-cover bg-center bg-no-repeat relative" style={{ backgroundImage: "url('/src/assets/hero-bg.jpg')" }}>
+    <section className="w-full min-h-screen bg-cover bg-center bg-no-repeat relative" style={{ backgroundImage: `url(${heroBg})` }}>
       {/* Overlay */}
       <div className="absolute inset-0 bg-black/50 z-0"></div>
 
