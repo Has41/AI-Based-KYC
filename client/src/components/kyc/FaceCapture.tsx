@@ -3,13 +3,15 @@ import VerificationModal from "../common/VerificationModal";
 import type { Step } from "../../types/KycFlowTypes";
 
 type FaceCaptureProps = {
+  personalInfo: { fullName: string; age: number; cnic: string };
+  capturedFace: string | null;
+  setCapturedFace: React.Dispatch<React.SetStateAction<string | null>>;
   finalizeVerification: () => void;
   setStep: React.Dispatch<React.SetStateAction<Step>>;
 };
 
-const FaceCapture = ({ finalizeVerification, setStep }: FaceCaptureProps) => {
+const FaceCapture = ({ finalizeVerification, setStep, capturedFace, setCapturedFace, personalInfo }: FaceCaptureProps) => {
   const [ready, setReady] = useState(false);
-  const [capturedFace, setCapturedFace] = useState<string | null>(null);
   const [flashOn, setFlashOn] = useState(false);
   const [torchSupported, setTorchSupported] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
@@ -159,7 +161,7 @@ const FaceCapture = ({ finalizeVerification, setStep }: FaceCaptureProps) => {
       </section>
 
       {/* VERIFICATION MODAL */}
-      <VerificationModal open={modalOpen} onClose={handleModalClose} />
+      <VerificationModal faceImage={capturedFace} personalInfo={personalInfo} open={modalOpen} onClose={handleModalClose} />
     </>
   );
 };

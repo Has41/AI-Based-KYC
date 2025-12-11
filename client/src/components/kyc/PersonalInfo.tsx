@@ -2,24 +2,29 @@ import { useState } from "react";
 import type { Step } from "../../types/KycFlowTypes";
 
 type PersonalInfoProps = {
+  personalInfo: { fullName: string; age: number; cnic: string };
+  setPersonalInfo: React.Dispatch<React.SetStateAction<{ fullName: string; age: number; cnic: string }>>;
   setStep: React.Dispatch<React.SetStateAction<Step>>;
 };
 
-const PersonalInfo = ({ setStep }: PersonalInfoProps) => {
-  const [fullName, setFullName] = useState("");
-  const [age, setAge] = useState("");
-  const [cnic, setCnic] = useState("");
-
+const PersonalInfo = ({ personalInfo, setPersonalInfo, setStep }: PersonalInfoProps) => {
   const [errors, setErrors] = useState<{ fullName?: string; age?: string; cnic?: string }>({});
 
   const handleNext = () => {
     const newErrors: typeof errors = {};
 
-    if (!fullName.trim()) newErrors.fullName = "Full Name is required";
-    if (!age || isNaN(Number(age)) || Number(age) < 18) newErrors.age = "Valid age (18+) required";
-    if (!cnic.match(/^\d{5}-\d{7}-\d$/)) newErrors.cnic = "CNIC must be in 12345-1234567-1 format";
-    setStep("cnic");
+    if (!personalInfo.fullName.trim()) newErrors.fullName = "Full Name is required";
+
+    if (!personalInfo.age || isNaN(Number(personalInfo.age)) || Number(personalInfo.age) < 18) newErrors.age = "Valid age (18+) required";
+
+    if (!personalInfo.cnic.match(/^\d{5}-\d{7}-\d$/)) newErrors.cnic = "CNIC must be in 12345-1234567-1 format";
+
     setErrors(newErrors);
+
+    // Move to next step only if no errors
+    if (Object.keys(newErrors).length === 0) {
+      setStep("cnic");
+    }
   };
 
   return (
@@ -32,8 +37,8 @@ const PersonalInfo = ({ setStep }: PersonalInfoProps) => {
         <label className="text-sm font-medium">Full Name</label>
         <input
           type="text"
-          value={fullName}
-          onChange={(e) => setFullName(e.target.value)}
+          value={personalInfo.fullName}
+          onChange={(e) => setPersonalInfo((prev) => ({ ...prev, fullName: e.target.value }))}
           className={`w-full px-4 py-2 rounded-lg border ${errors.fullName ? "border-red-500" : "border-gray-300"}`}
           placeholder="John Doe"
         />
@@ -45,8 +50,8 @@ const PersonalInfo = ({ setStep }: PersonalInfoProps) => {
         <label className="text-sm font-medium">Age</label>
         <input
           type="number"
-          value={age}
-          onChange={(e) => setAge(e.target.value)}
+          value={personalInfo.age}
+          onChange={(e) => setPersonalInfo((prev) => ({ ...prev, age: Number(e.target.value) }))}
           className={`w-full px-4 py-2 rounded-lg border ${errors.age ? "border-red-500" : "border-gray-300"}`}
           placeholder="18"
         />
@@ -58,8 +63,8 @@ const PersonalInfo = ({ setStep }: PersonalInfoProps) => {
         <label className="text-sm font-medium">CNIC</label>
         <input
           type="text"
-          value={cnic}
-          onChange={(e) => setCnic(e.target.value)}
+          value={personalInfo.cnic}
+          onChange={(e) => setPersonalInfo((prev) => ({ ...prev, cnic: e.target.value }))}
           className={`w-full px-4 py-2 rounded-lg border ${errors.cnic ? "border-red-500" : "border-gray-300"}`}
           placeholder="12345-1234567-1"
         />

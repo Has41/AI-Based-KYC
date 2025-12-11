@@ -5,17 +5,24 @@ type Props = {
   fullName: string;
   tier?: string;
   setShowQr: (value: boolean) => void;
+  faceImage: string | null;
 };
 
-const WalletUserInfo = ({ fullName, tier = "Silver", setShowQr }: Props) => {
+const WalletUserInfo = ({ fullName, tier = "Silver", setShowQr, faceImage }: Props) => {
   const { points } = useWallet();
   // const navigate = useNavigate();
 
   return (
     <div className="bg-white shadow rounded-xl p-6 flex flex-col items-center space-y-4">
       {/* Avatar */}
-      <div className="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center">
-        <span className="text-gray-500 font-medium text-lg">Avatar</span>
+      <div className="p-3 flex flex-col items-center">
+        {faceImage ? (
+          <img src={faceImage} alt="Face" className="w-24 h-24 rounded-full object-cover border shadow-md" />
+        ) : (
+          <div className="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center border shadow-md">
+            <span className="text-gray-500 font-medium text-lg">Avatar</span>
+          </div>
+        )}
       </div>
 
       {/* User Info */}

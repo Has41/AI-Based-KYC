@@ -6,7 +6,12 @@ import type { Tab } from "../types/KycFlowTypes";
 import { useState } from "react";
 import ViewQrModal from "../components/common/ViewQrModal";
 
-const Wallet = ({ setTab }: { setTab: React.Dispatch<React.SetStateAction<Tab>> }) => {
+type WalletProps = {
+  setTab: React.Dispatch<React.SetStateAction<Tab>>;
+  capturedFace: string | null;
+};
+
+const Wallet = ({ setTab, capturedFace }: WalletProps) => {
   const [mode, setMode] = useState<"wallet" | "scan">("wallet");
   const [showQr, setShowQr] = useState(false);
 
@@ -25,7 +30,7 @@ const Wallet = ({ setTab }: { setTab: React.Dispatch<React.SetStateAction<Tab>> 
     <section className="bg-gray-100 p-6 space-y-6 font-poppins">
       <h1 className="text-2xl font-bold">Welcome to Oeconvi digital wallet</h1>
 
-      <WalletUserInfo setShowQr={setShowQr} fullName={fullName} tier={tier} />
+      <WalletUserInfo faceImage={capturedFace} setShowQr={setShowQr} fullName={fullName} tier={tier} />
 
       <WalletTransactions />
       {showQr && <ViewQrModal walletId={"XYZ"} fullName={fullName} tier={tier} onClose={() => setShowQr(false)} />}

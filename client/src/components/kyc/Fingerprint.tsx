@@ -3,11 +3,12 @@ import type { Step, Tab } from "../../types/KycFlowTypes";
 import VerificationModal from "../common/VerificationModal";
 
 type FingerprintProps = {
+  personalInfo: { fullName: string; age: number; cnic: string };
   setStep: React.Dispatch<React.SetStateAction<Step>>;
   setTab: React.Dispatch<React.SetStateAction<Tab>>;
 };
 
-const Fingerprint = ({ setStep, setTab }: FingerprintProps) => {
+const Fingerprint = ({ setStep, setTab, personalInfo }: FingerprintProps) => {
   const [ready, setReady] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [phase, setPhase] = useState<"left" | "right">("left");
@@ -217,7 +218,7 @@ const Fingerprint = ({ setStep, setTab }: FingerprintProps) => {
           </div>
         </div>
       )}
-      <VerificationModal open={modalOpen} onClose={handleModalClose} />
+      <VerificationModal personalInfo={personalInfo} open={modalOpen} onClose={handleModalClose} />
     </section>
   );
 };

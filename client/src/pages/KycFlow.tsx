@@ -12,6 +12,12 @@ import PersonalInfo from "../components/kyc/PersonalInfo";
 
 const KycFlow = () => {
   const { createWallet, addPoints } = useWallet();
+  const [capturedFace, setCapturedFace] = useState<string | null>(null);
+  const [personalInfo, setPersonalInfo] = useState({
+    fullName: "Ali Khan",
+    age: 23,
+    cnic: "33333-4444444-6"
+  });
   const [step, setStep] = useState<Step>("personal");
   const [tab, setTab] = useState<Tab>("not-active");
 
@@ -54,14 +60,22 @@ const KycFlow = () => {
 
       {tab === "not-active" && (
         <div className="max-w-full p-8">
-          {step === "personal" && <PersonalInfo setStep={setStep} />}
+          {step === "personal" && <PersonalInfo setPersonalInfo={setPersonalInfo} personalInfo={personalInfo} setStep={setStep} />}
           {step === "cnic" && <CnicUpload setStep={setStep} />}
-          {step === "fingerprint" && <Fingerprint setStep={setStep} setTab={setTab} />}
-          {step === "face" && <FaceCapture setStep={setStep} finalizeVerification={finalizeVerification} />}
+          {step === "fingerprint" && <Fingerprint personalInfo={personalInfo} setStep={setStep} setTab={setTab} />}
+          {step === "face" && (
+            <FaceCapture
+              personalInfo={personalInfo}
+              capturedFace={capturedFace}
+              setCapturedFace={setCapturedFace}
+              setStep={setStep}
+              finalizeVerification={finalizeVerification}
+            />
+          )}
         </div>
       )}
 
-      {tab === "home" && <Wallet setTab={setTab} />}
+      {tab === "home" && <Wallet capturedFace={capturedFace} setTab={setTab} />}
       {tab === "rewards" && <Rewards setTab={setTab} />}
       {tab === "dashboard" && <ReportDashboard />}
     </main>
