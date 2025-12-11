@@ -146,8 +146,6 @@ const Fingerprint = ({ setStep, setTab }: FingerprintProps) => {
 
           {/* Bottom UI */}
           <div className="absolute bottom-6 w-full px-4 flex flex-col gap-3">
-            <h2 className="text-white text-lg text-center mb-1">{phase === "left" ? "Left Hand" : "Right Hand"}</h2>
-
             <p className="text-white text-center text-sm mb-2">Align your four fingers inside the frame.</p>
 
             {phase === "left" && !leftHandImg && (
