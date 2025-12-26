@@ -1,11 +1,12 @@
 import { useState } from "react";
+import type { Step } from "../../types/KycFlowTypes";
 
-const UserConsent: React.FC = () => {
+const UserConsent = ({ setStep }: { setStep: React.Dispatch<React.SetStateAction<Step>> }) => {
   const [consent, setConsent] = useState(false);
 
   return (
     <section className="flex items-center justify-between px-4 font-poppins">
-      <div className="w-full max-w-md flex flex-col justify-between">
+      <div className="w-full max-w-md flex flex-col justify-between min-h-[90svh]">
         {/* Top Content */}
         <div>
           {/* Title */}
@@ -42,6 +43,7 @@ const UserConsent: React.FC = () => {
 
           <button
             disabled={!consent}
+            onClick={() => setStep("personal")}
             className={`w-full rounded-lg px-4 py-2 text-sm font-medium text-white transition
               ${consent ? "bg-green-600 hover:bg-green-700" : "cursor-not-allowed bg-green-300"}`}
           >

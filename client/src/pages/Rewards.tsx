@@ -32,7 +32,7 @@ const Rewards = ({ setTab }: { setTab: React.Dispatch<React.SetStateAction<Tab>>
   };
 
   return (
-    <section className="min-h-screen bg-gray-100 w-full p-4 font-poppins">
+    <section className="min-h-screen w-full py-4 font-poppins">
       <button onClick={() => setTab("home")} className="flex items-center gap-2 mb-4 text-gray-700 hover:text-gray-900 font-medium">
         <ArrowLeft size={20} /> Back
       </button>

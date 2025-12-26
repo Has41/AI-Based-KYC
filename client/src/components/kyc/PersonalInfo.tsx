@@ -1,81 +1,156 @@
 import { useState } from "react";
 import type { Step } from "../../types/KycFlowTypes";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 type PersonalInfoProps = {
-  personalInfo: { fullName: string; age: number; cnic: string };
-  setPersonalInfo: React.Dispatch<React.SetStateAction<{ fullName: string; age: number; cnic: string }>>;
+  personalInfo: {
+    fullName: string;
+    dob: string;
+    cnic: string;
+    phone: string;
+  };
+  setPersonalInfo: React.Dispatch<
+    React.SetStateAction<{
+      fullName: string;
+      dob: string;
+      cnic: string;
+      phone: string;
+    }>
+  >;
   setStep: React.Dispatch<React.SetStateAction<Step>>;
 };
 
 const PersonalInfo = ({ personalInfo, setPersonalInfo, setStep }: PersonalInfoProps) => {
-  const [errors, setErrors] = useState<{ fullName?: string; age?: string; cnic?: string }>({});
+  const [errors, setErrors] = useState<{
+    fullName?: string;
+    dob?: string;
+    cnic?: string;
+    phone?: string;
+  }>({});
+
+  const isAdult = (dob: string) => {
+    const birthDate = new Date(dob);
+    const today = new Date();
+
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const m = today.getMonth() - birthDate.getMonth();
+
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+
+    return age >= 18;
+  };
 
   const handleNext = () => {
     const newErrors: typeof errors = {};
 
-    if (!personalInfo.fullName.trim()) newErrors.fullName = "Full Name is required";
+    if (!personalInfo.fullName.trim()) {
+      newErrors.fullName = "Please enter your full legal name.";
+    }
 
-    if (!personalInfo.age || isNaN(Number(personalInfo.age)) || Number(personalInfo.age) < 18) newErrors.age = "Valid age (18+) required";
+    if (!personalInfo.dob) {
+      newErrors.dob = "Date of birth is required.";
+    } else if (!isAdult(personalInfo.dob)) {
+      newErrors.dob = "You must be at least 18 years old.";
+    }
 
-    if (!personalInfo.cnic.match(/^\d{5}-\d{7}-\d$/)) newErrors.cnic = "CNIC must be in 12345-1234567-1 format";
+    if (!personalInfo.cnic.match(/^\d{5}-\d{7}-\d$/)) {
+      newErrors.cnic = "Please enter a valid CNIC (e.g. 12345-1234567-1).";
+    }
+
+    if (!personalInfo.phone.match(/^\+92\d{10}$/)) {
+      newErrors.phone = "Enter a valid mobile number (e.g. +923001234567).";
+    }
 
     setErrors(newErrors);
 
-    // Move to next step only if no errors
     if (Object.keys(newErrors).length === 0) {
-      setStep("cnic");
+      setStep("otp");
     }
   };
 
   return (
-    <div className="w-full max-w-md mx-auto p-4 flex flex-col gap-4 font-poppins">
-      <h2 className="text-xl font-bold text-center mb-2">Personal Information</h2>
-      <p className="text-sm text-gray-600 text-center mb-4">Please fill in your details for verification.</p>
+    <div className="w-full mx-auto flex flex-col gap-x-6 gap-y-4 font-poppins">
+      {/* Header */}
+      <div className="flex items-center justify-between mb-1">
+        {/* Left arrow */}
+        <button onClick={() => setStep("consent")} className="p-2 rounded-full hover:bg-gray-100">
+          <ChevronLeft color="green" size={20} />
+        </button>
+
+        {/* Title */}
+        <h2 className="text-lg font-semibold text-gray-900 text-center flex-1">Personal Details</h2>
+
+        <button onClick={() => setStep("otp")} className="p-2 rounded-full hover:bg-gray-100">
+          <ChevronRight color="green" size={20} />
+        </button>
+      </div>
+      <hr className="border-gray-200" />
+
+      <p className="text-sm text-gray-600 mb-6 text-center">Provide accurate information as it appears on your government-issued ID.</p>
 
       {/* Full Name */}
       <div className="flex flex-col gap-1">
-        <label className="text-sm font-medium">Full Name</label>
+        <label className="text-sm font-medium text-gray-700">Full Legal Name</label>
         <input
           type="text"
           value={personalInfo.fullName}
           onChange={(e) => setPersonalInfo((prev) => ({ ...prev, fullName: e.target.value }))}
-          className={`w-full px-4 py-2 rounded-lg border ${errors.fullName ? "border-red-500" : "border-gray-300"}`}
-          placeholder="John Doe"
+          className={`w-full px-4 py-2 rounded-lg border text-sm focus:outline-none focus:ring-1
+            ${errors.fullName ? "border-red-500 focus:ring-red-500" : "border-gray-300 focus:ring-green-600"}`}
+          placeholder="As shown on CNIC"
         />
         {errors.fullName && <span className="text-red-500 text-xs">{errors.fullName}</span>}
       </div>
 
-      {/* Age */}
+      {/* Date of Birth */}
       <div className="flex flex-col gap-1">
-        <label className="text-sm font-medium">Age</label>
+        <label className="text-sm font-medium text-gray-700">Date of Birth</label>
         <input
-          type="number"
-          value={personalInfo.age}
-          onChange={(e) => setPersonalInfo((prev) => ({ ...prev, age: Number(e.target.value) }))}
-          className={`w-full px-4 py-2 rounded-lg border ${errors.age ? "border-red-500" : "border-gray-300"}`}
-          placeholder="18"
+          type="date"
+          value={personalInfo.dob}
+          onChange={(e) => setPersonalInfo((prev) => ({ ...prev, dob: e.target.value }))}
+          className={`w-full px-4 py-2 rounded-lg border text-sm focus:outline-none focus:ring-1
+            ${errors.dob ? "border-red-500 focus:ring-red-500" : "border-gray-300 focus:ring-green-600"}`}
         />
-        {errors.age && <span className="text-red-500 text-xs">{errors.age}</span>}
+        {errors.dob && <span className="text-red-500 text-xs">{errors.dob}</span>}
       </div>
 
       {/* CNIC */}
       <div className="flex flex-col gap-1">
-        <label className="text-sm font-medium">CNIC</label>
+        <label className="text-sm font-medium text-gray-700">CNIC Number</label>
         <input
           type="text"
           value={personalInfo.cnic}
           onChange={(e) => setPersonalInfo((prev) => ({ ...prev, cnic: e.target.value }))}
-          className={`w-full px-4 py-2 rounded-lg border ${errors.cnic ? "border-red-500" : "border-gray-300"}`}
+          className={`w-full px-4 py-2 rounded-lg border text-sm focus:outline-none focus:ring-1
+            ${errors.cnic ? "border-red-500 focus:ring-red-500" : "border-gray-300 focus:ring-green-600"}`}
           placeholder="12345-1234567-1"
         />
         {errors.cnic && <span className="text-red-500 text-xs">{errors.cnic}</span>}
       </div>
 
-      <button onClick={handleNext} className="w-full py-3 mt-2 bg-purple-600 text-white rounded-lg font-semibold">
-        Next
-      </button>
+      {/* Mobile Number */}
+      <div className="flex flex-col gap-1">
+        <label className="text-sm font-medium text-gray-700">Mobile Phone Number</label>
+        <input
+          type="tel"
+          value={personalInfo.phone}
+          onChange={(e) => setPersonalInfo((prev) => ({ ...prev, phone: e.target.value }))}
+          className={`w-full px-4 py-2 rounded-lg border text-sm focus:outline-none focus:ring-1
+            ${errors.phone ? "border-red-500 focus:ring-red-500" : "border-gray-300 focus:ring-green-600"}`}
+          placeholder="+923001234567"
+        />
+        {errors.phone && <span className="text-red-500 text-xs">{errors.phone}</span>}
+      </div>
 
-      <p className="text-xs text-gray-400 text-center mt-2">⚠️ This is a demo. No data will be saved.</p>
+      <hr className="border-gray-200" />
+
+      {/* Action */}
+      <button onClick={handleNext} className="w-full py-3 bg-green-600 text-white rounded-lg font-semibold text-sm hover:bg-green-700 transition">
+        Continue Verification
+      </button>
     </div>
   );
 };

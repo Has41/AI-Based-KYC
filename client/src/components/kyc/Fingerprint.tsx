@@ -1,16 +1,11 @@
 import { useState, useRef, useEffect } from "react";
-import type { Step, Tab } from "../../types/KycFlowTypes";
-import VerificationModal from "../common/VerificationModal";
 
 type FingerprintProps = {
-  personalInfo: { fullName: string; age: number; cnic: string };
-  setStep: React.Dispatch<React.SetStateAction<Step>>;
-  setTab: React.Dispatch<React.SetStateAction<Tab>>;
+  finalizeVerification: () => void;
 };
 
-const Fingerprint = ({ setStep, setTab, personalInfo }: FingerprintProps) => {
+const Fingerprint = ({ finalizeVerification }: FingerprintProps) => {
   const [ready, setReady] = useState(false);
-  const [modalOpen, setModalOpen] = useState(false);
   const [phase, setPhase] = useState<"left" | "right">("left");
   const [leftHandImg, setLeftHandImg] = useState<string | null>(null);
   const [rightHandImg, setRightHandImg] = useState<string | null>(null);
@@ -79,15 +74,6 @@ const Fingerprint = ({ setStep, setTab, personalInfo }: FingerprintProps) => {
     });
   };
 
-  const handleCompleteVerification = () => {
-    setModalOpen(true);
-  };
-
-  const handleModalClose = () => {
-    setModalOpen(false);
-    setTab("home"); // navigate to wallet/home after verification
-  };
-
   useEffect(() => {
     setTimeout(() => {
       refocusCamera();
@@ -129,12 +115,8 @@ const Fingerprint = ({ setStep, setTab, personalInfo }: FingerprintProps) => {
         <h2 className="text-xl font-semibold mb-2">Fingerprint Capture</h2>
         <p className="text-sm text-neutral-600 mb-4">We will now capture your fingerprints using your phone’s back camera.</p>
         <div className="flex flex-col">
-          <button onClick={() => setReady(true)} className="px-6 py-3 bg-purple-600 text-white rounded-lg">
+          <button onClick={() => setReady(true)} className="px-6 py-3 bg-green-600 text-white rounded-lg">
             I'm Ready
-          </button>
-
-          <button onClick={() => setStep("cnic")} className="py-3 rounded-lg font-medium mt-4 bg-purple-600 hover:bg-purple-700 text-white">
-            Back
           </button>
         </div>
       </section>
@@ -184,13 +166,13 @@ const Fingerprint = ({ setStep, setTab, personalInfo }: FingerprintProps) => {
             <p className="text-white text-center text-sm mb-2">Align your four fingers inside the frame.</p>
 
             {phase === "left" && !leftHandImg && (
-              <button onClick={captureLeftHand} className="w-full py-3 bg-purple-600 text-white rounded-lg">
+              <button onClick={captureLeftHand} className="w-full py-3 bg-green-600 text-white rounded-lg">
                 Capture Left Hand
               </button>
             )}
 
             {phase === "right" && !rightHandImg && (
-              <button onClick={captureRightHand} className="w-full py-3 bg-purple-600 text-white rounded-lg">
+              <button onClick={captureRightHand} className="w-full py-3 bg-green-600 text-white rounded-lg">
                 Capture Right Hand
               </button>
             )}
@@ -208,17 +190,12 @@ const Fingerprint = ({ setStep, setTab, personalInfo }: FingerprintProps) => {
           </div>
 
           <div className="w-full flex flex-col gap-2 mt-4">
-            <button onClick={() => setStep("face")} className="w-full py-3 bg-purple-600 text-white rounded-lg">
-              Continue to Face (Optional)
-            </button>
-
-            <button onClick={handleCompleteVerification} className="w-full py-3 bg-purple-600 text-white rounded-lg">
-              Complete Verification
+            <button onClick={finalizeVerification} className="w-full py-3 bg-green-600 text-white rounded-lg">
+              Continue
             </button>
           </div>
         </div>
       )}
-      <VerificationModal personalInfo={personalInfo} open={modalOpen} onClose={handleModalClose} />
     </section>
   );
 };
