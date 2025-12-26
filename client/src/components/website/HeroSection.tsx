@@ -1,5 +1,5 @@
 import type { Dispatch, SetStateAction } from "react";
-import heroBg from "../../assets/hero-bg.jpg";
+import heroBg from "../../assets/KYCImg.png";
 
 type ViewType = "home" | "kyc";
 

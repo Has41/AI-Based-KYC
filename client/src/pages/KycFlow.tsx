@@ -9,6 +9,7 @@ import Rewards from "./Rewards";
 import ReportDashboard from "./ReportDashboard";
 import { Info } from "lucide-react";
 import PersonalInfo from "../components/kyc/PersonalInfo";
+// import UserConsent from "../components/kyc/UserConsent";
 
 const KycFlow = () => {
   const { createWallet, addPoints } = useWallet();
@@ -50,6 +51,8 @@ const KycFlow = () => {
           <span className={`${step === "fingerprint" ? "text-purple-600 font-bold" : "text-neutral-500"}`}>Step 3</span>
         </div>
       )}
+
+      {/* {step === "consent" && <UserConsent />} */}
 
       {tab === "not-active" && (
         <div className="mb-4 w-full flex items-center gap-x-2 max-w-xl px-4 py-2 bg-yellow-100 text-yellow-800 text-center text-sm rounded-lg">
