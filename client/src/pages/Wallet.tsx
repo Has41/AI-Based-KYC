@@ -62,7 +62,7 @@ const Wallet = ({ setTab }: WalletProps) => {
       </header>
       {showQr && <ViewQrModal walletId={"XYZ"} fullName={"John Doe"} tier={"Silver"} onClose={() => setShowQr(false)} />}
       {/* Balance Card */}
-      <div className="relative bg-gradient-to-r from-blue-700 to-blue-600 text-white rounded-2xl p-4 shadow-md">
+      <div className="relative bg-linear-to-r from-blue-700 to-blue-600 text-white rounded-2xl p-4 shadow-md">
         <div className="flex flex-col gap-4">
           {/* Top section with balance and tier */}
           <div className="flex items-start justify-between">
@@ -78,7 +78,7 @@ const Wallet = ({ setTab }: WalletProps) => {
             </div>
 
             {/* Wallet icon - now at top right */}
-            <WalletCards size={32} className="text-white/95 flex-shrink-0" />
+            <WalletCards size={32} className="text-white/95 shrink-0" />
           </div>
 
           {/* Action buttons section */}
@@ -160,7 +160,7 @@ const Wallet = ({ setTab }: WalletProps) => {
             <article
               key={o.id}
               onClick={() => openOfferLink(o.url)}
-              className="min-w-[72%] sm:min-w-[46%] bg-gradient-to-r from-indigo-600 to-violet-600 text-white rounded-2xl p-3 shadow-md hover:scale-105 transition-transform cursor-pointer mx-1"
+              className="min-w-[72%] sm:min-w-[46%] bg-linear-to-br from-indigo-600 to-violet-600 text-white rounded-2xl p-3 shadow-md hover:scale-105 transition-transform cursor-pointer mx-1"
               aria-label={o.title}
               role="button"
             >

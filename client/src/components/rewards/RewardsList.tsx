@@ -107,7 +107,7 @@ const RewardsList: React.FC<RewardsListProps> = ({ userPoints, onSelectReward })
               onClick={() => canRedeem && onSelectReward(reward)}
             >
               {/* Image Section */}
-              <div className="relative h-40 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center overflow-hidden">
+              <div className="relative h-40 bg-linear-to-br from-gray-100 to-gray-200 flex items-center justify-center overflow-hidden">
                 {reward.image ? (
                   <img src={reward.image} alt={reward.title} className="w-full h-full object-cover" />
                 ) : (
@@ -124,7 +124,7 @@ const RewardsList: React.FC<RewardsListProps> = ({ userPoints, onSelectReward })
                   ) : (
                     <div
                       className={`px-3 py-1.5 rounded-full text-xs font-bold shadow-sm ${
-                        canRedeem ? "bg-gradient-to-r from-blue-600 to-blue-500 text-white" : "bg-gray-300 text-gray-700"
+                        canRedeem ? "bg-linear-to-br from-blue-600 to-blue-500 text-white" : "bg-gray-300 text-gray-700"
                       }`}
                     >
                       {reward.points} pts
@@ -134,9 +134,9 @@ const RewardsList: React.FC<RewardsListProps> = ({ userPoints, onSelectReward })
               </div>
 
               {/* Content Section */}
-              <div className="p-4 flex flex-col flex-grow">
+              <div className="p-4 flex flex-col grow">
                 <h2 className="font-bold text-gray-900 text-lg mb-1">{reward.title}</h2>
-                <p className="text-gray-600 text-sm mb-4 flex-grow">{reward.description}</p>
+                <p className="text-gray-600 text-sm mb-4 grow">{reward.description}</p>
 
                 {/* Status & Action Button */}
                 <div className="mt-auto">
@@ -144,8 +144,8 @@ const RewardsList: React.FC<RewardsListProps> = ({ userPoints, onSelectReward })
                     <button
                       className={`w-full py-3 rounded-xl font-medium text-white transition-all ${
                         isFree
-                          ? "bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700"
-                          : "bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600"
+                          ? "bg-linear-to-br from-green-500 to-green-600 hover:from-green-600 hover:to-green-700"
+                          : "bg-linear-to-br from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600"
                       } active:scale-[0.98]`}
                       onClick={(e) => {
                         e.stopPropagation();

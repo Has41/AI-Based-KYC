@@ -1,7 +1,7 @@
 import { useState } from "react";
 import FaceCapture from "./FaceCapture";
 import Fingerprint from "./Fingerprint";
-import { CheckCircle, ScanFace, Fingerprint as FingerprintIcon, ArrowLeft, ChevronLeft, ChevronRight } from "lucide-react";
+import { CheckCircle, ScanFace, Fingerprint as FingerprintIcon, ChevronLeft, ChevronRight } from "lucide-react";
 import type { Step } from "../../types/KycFlowTypes";
 
 type Props = {
